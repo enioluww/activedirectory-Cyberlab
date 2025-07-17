@@ -30,9 +30,9 @@ On **Client01**, I:
   - Preferred DNS: `192.168.xx.xx` (my DC)
 
 
-![alt text][logo]
+![alt text][networksetting]
 
-[logo]: https://github.com/enioluww/activedirectory-Cyberlab/blob/60dd36fe9a89e6a30f8c7336a987988a82c41e28/JOIN%20DOMAIN.png
+[networksetting]: https://github.com/enioluww/activedirectory-Cyberlab/blob/9ab055417563108d172553165b93d48edaf919ef/networksetting.png
 
 ---
 
