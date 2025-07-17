@@ -1,212 +1,233 @@
 # 🛡️ Enterprise Cybersecurity Lab Setup
 
-A hands-on, enterprise-style cybersecurity lab with Active Directory, Group Policies, file server permissions, phishing simulations, DNS sinkhole/web filtering, Sysmon logging, and red team tactics — all configured in a virtual environment.
+
+This is my personal cybersecurity lab where I built a simulated Windows Server environment to practice essential blue team and system administration skills. I used Windows Server and a client OS to simulate Active Directory, Group Policy, file server security, DNS sinkholes, Sysmon logging — all in VirtualBox.
 
 ---
 
-## 🖥️ Table of Contents
+## 💻 My Lab Architecture
 
-1. [Lab Overview](#lab-overview)
-2. [Requirements](#requirements)
-3. [VM Setup (Domain Controller & Client)](#vm-setup)
-4. [Active Directory Setup](#active-directory-setup)
-5. [Users and Groups](#users-and-groups)
-6. [File Server with Role-Based Access](#file-server)
-7. [Group Policies (GPOs)](#group-policies)
-8. [Sysmon Setup for Logging](#sysmon-logging)
-9. [DNS Sinkhole & Web Filtering](#dns-sinkhole)
-10. [Red Team Simulation](#red-team-simulation)
-11. [Screenshots](#screenshots)
-12. [Credits](#credits)
+| Machine Name | Role              | OS             | IP Address    |
+| ------------ | ----------------- | -------------- | ------------- |
+| DC01         | Domain Controller | Windows Server | 192.168.56.10 |
+| Client01     | Domain Member     | Windows 10     | 192.168.56.X  |
+
+> Note: I configured both machines in Host-Only Network mode in VirtualBox so they can communicate.
 
 ---
 
-## ✅ Lab Overview
+## 🚀 How to Recreate My Lab
 
-This lab simulates a small enterprise network for security training:
+### 1. Set a Static IP Address
 
-- One **Windows Server 2022** as the Domain Controller (`DC01`)
-- One **Windows 11 Enterprise** as a domain-joined client (`Client01`)
-- Active Directory Domain Services
-- Group Policy for hardening and restrictions
-- Shared folders with role-based access
-- Sysmon for deep logging
-- DNS sinkhole for malicious sites
-- Simulated phishing site
-- Red team enumeration with built-in Windows tools
+On **Client01**, I:
 
----
+- Opened `Control Panel > Network and Sharing Center > Adapter Settings`
+- Right-clicked the network adapter > Properties > IPv4
+- Set:
+  - IP Address: `192.168.xx.xx`
+  - Subnet Mask: `255.255.255.0`
+  - Default Gateway: `192.168.xx.xx`
+  - Preferred DNS: `192.168.xx.xx` (my DC)
 
-## 🧰 Requirements
 
-- Host OS: Windows/macOS/Linux
-- Virtualization: [VirtualBox](https://www.virtualbox.org/) or VMware Workstation
-- ISOs:
-  - Windows Server 2022 Evaluation ISO
-  - Windows 11 Enterprise ISO (64-bit x64)
-- 40–60 GB disk space
-- 8+ GB RAM
+![alt text][networksetting] ![alt text][prop] ![alt text][adapter] 
 
----
 
-## 🏗️ VM Setup
+[networksetting]: https://github.com/enioluww/activedirectory-Cyberlab/blob/9ab055417563108d172553165b93d48edaf919ef/networksetting.png
 
-### 📁 Create Two VMs:
+[prop]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/PROPERTIES.png
 
-| VM Name  | OS                    | Specs            |
-| -------- | --------------------- | ---------------- |
-| DC01     | Windows Server 2022   | 2 cores, 4GB RAM |
-| Client01 | Windows 11 Enterprise | 2 cores, 4GB RAM |
+[adapter]: https://github.com/enioluww/activedirectory-Cyberlab/blob/efafdc69c12ae130628028cc3fda5ff93888fef3/Adapter%20settings.png
 
-### ⚙️ Networking
-
-- Use **Internal Network** for isolated comms
-- Assign static IPs (e.g., DC01: `10.0.0.1`, Client01: `10.0.0.10`)
 
 ---
 
-## 🧱 Active Directory Setup
+### 2. Test Connection to Domain Controller
 
-1. On **DC01**, open **Server Manager > Add Roles**
-2. Select **Active Directory Domain Services**
-3. Promote to domain controller:
-   - Domain: `corp.local`
-   - Set DSRM password
-4. Restart after promotion
+I opened Command Prompt and ran:
 
----
-
-## 👥 Users and Groups
-
-Use `Active Directory Users and Computers`:
-
-### Groups
-
-- `IT Admins`
-- `Finance`
-- `HR`
-- `Interns`
-
-### Users
-
-| Username | Group     | Notes                   |
-| -------- | --------- | ----------------------- |
-| jsmith   | IT Admins | Domain Admin privileges |
-| ajones   | HR        |                         |
-| bwayne   | Finance   |                         |
-| intern1  | Interns   | Least privileges        |
+```bash
+ping 192.168.xx.xx
+```
 
 ---
 
-## 🗂️ File Server (Role-Based Access)
+### 3. Join the Domain
 
-1. On DC01, create folders:
+On **Client01**:
 
-   - `C:\Shares\HR`
-   - `C:\Shares\Finance`
-   - `C:\Shares\Public`
+- Opened `System Properties > Change Settings > Computer Name`
+- Clicked **Domain**, typed `corp.local`
+- Entered domain admin credentials
+- Restarted after the prompt
 
-2. Share folders with NTFS and share permissions:
 
-   - `HR`: Full access to HR group only
-   - `Finance`: Read/write for Finance
-   - `Public`: Read for everyone
+![alt text][jd] ![alt text][jd2]
 
-3. Test access from **Client01**
+[jd2]: https://github.com/enioluww/activedirectory-Cyberlab/blob/a8549ae42e37f6360adf45963b9ceb8bdfb99a11/Join%20domain%20(2).png
 
----
+[jd]:https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/JOIN%20DOMAIN.png
 
-## 🛡️ Group Policy (GPOs)
-
-Use `Group Policy Management` on DC01:
-
-### Key Policies
-
-| Policy                | Path                                   | Target Group  |
-| --------------------- | -------------------------------------- | ------------- |
-| Disable Control Panel | User > Admin Templates > Control Panel | Interns       |
-| Hide CMD              | User > System                          | Interns       |
-| Lock after 5 min idle | User > Security                        | All Users     |
-| Logon warning banner  | Computer > Windows Settings > Security | All Computers |
-| Block USB storage     | Computer > Removable Storage Access    | All Computers |
-
-Apply via **OU targeting**.
 
 ---
 
-## 🔍 Sysmon Logging
+### 4. Log In with a Domain User
 
-### Step 1: Download Sysmon
+After rebooting, I logged in using a domain account I created on the DC (`corp\jsmith`).
 
-- [Sysinternals Suite](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
+---
 
-### Step 2: Download SwiftOnSecurity config
+### 5. Group Creation and RBAC
 
-- [https://github.com/SwiftOnSecurity/sysmon-config](https://github.com/SwiftOnSecurity/sysmon-config)
+In **Active Directory Users and Computers** on DC01:
 
-### Step 3: Install Sysmon (Client01 & DC01)
+- I created these security groups:
+  - IT Admins
+  - HR users
+- Then I created user accounts like `jsmith`, `ajones`, `bwayne`, and `intern1`
+- Assigned them to their respective groups
+
+![alt text][RBAC]
+
+[RBAC]: https://github.com/enioluww/activedirectory-Cyberlab/blob/4875fd86f8a1c5e28a491dc0d69b6b967cabeb0c/Group%20creation.png
+
+---
+
+### 6. File Server + NTFS Permissions
+
+I created and shared these folders on DC01:
+
+```
+C:\Shares\HR
+C:\Shares\Finance
+C:\Shares\Public
+```
+
+Then I applied NTFS permissions so that:
+
+- Only `HR` group can access the HR share
+- Only `Finance` group can access the Finance share
+- All domain users can access Public (read-only)
+
+![alt text][NTFS]
+
+[NTFS]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/NTFS%20file%20permissions.png
+
+---
+
+### 7. Group Policy Hardening
+
+Using Group Policy Management, I applied:
+
+| Policy                 | Scope     | Purpose                    |
+| ---------------------- | --------- | -------------------------- |
+| Disable Control Panel  | Interns   | Limit settings access      |
+| Disable Command Prompt | Interns   | Prevent CMD use            |
+| Account Lockout Policy | All Users | Lock after 3 failed logins |
+| Logon Warning Banner   | All Users | Legal warning at login     |
+| Block USB Storage      | All Users | Prevent data exfiltration  |
+
+![alt text][secure] ![alt text][warning]
+
+[secure]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/security%20hardening.png
+
+[warning]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/warning%20screen.png
+
+
+
+
+---
+
+### 8. Audit & Monitor Logins
+
+I enabled login auditing and viewed results in Event Viewer:
+
+- `Event ID 4624`: Successful login
+- `Event ID 4625`: Failed login
+![alt text][event]
+
+[event]: https://github.com/enioluww/activedirectory-Cyberlab/blob/4875fd86f8a1c5e28a491dc0d69b6b967cabeb0c/Event%20viewer-login%20audit.png
+
+
+---
+
+### 9. Simulate a Brute Force Attack
+
+On **Client01**, I tried several failed logins to trigger lockout:
+
+```powershell
+for /L %i in (1,1,10) do net use \DC01\C$ /user:corp\jsmith wrongpassword
+```
+
+After 3 attempts, the account locked. I verified it in Active Directory Users and Computers.
+
+![alt text][lockout]
+
+[lockout]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/account%20lockout%20enforcement.png
+
+---
+
+### 10. Deploy Sysmon for Deep Logging
+
+On both DC01 and Client01:
+
+- I downloaded Sysmon from Microsoft
+- Got SwiftOnSecurity's sysmon-config.xml
+- Installed it via PowerShell:
 
 ```powershell
 Sysmon64.exe -accepteula -i sysmonconfig.xml
 ```
 
-### Step 4: Verify in **Event Viewer**
+- Then checked logs in:
 
-- Logs → Applications and Services → Microsoft → Windows → Sysmon
+```
+Event Viewer > Applications and Services Logs > Microsoft > Windows > Sysmon > Operational
+```
+![alt text][log]
+
+[log]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/sysmon%20logs.png
 
 ---
 
-## 🌐 DNS Sinkhole & Web Filtering
+### 11. DNS Sinkhole / Web Filtering
 
-### Step 1: Edit Hosts File
+To block known malicious domains:
 
-On **DC01**:
+- I edited the `hosts` file on both machines:
 
 ```plaintext
-127.0.0.1 malicious.com
-127.0.0.1 phishing-site.org
+127.0.0.1 malicious-site.com
+127.0.0.1 phishing-site.com
 ```
 
-Distribute via GPO:
-
-- Use script to overwrite `C:\Windows\System32\drivers\etc\hosts`
+- This redirected any access attempts back to localhost.
 
 ---
 
-## ⚔️ Red Team Simulation
 
-Use PowerShell on **Client01** to simulate reconnaissance:
+### What This Lab Taught Me
 
-```powershell
-# Simulate user enumeration
-dir "\\dc01\C$"
-net user /domain
-net group "domain admins" /domain
-```
+Building this lab gave me real-world skills in:
 
-Also test phishing HTML with a static page hosted locally.
+- Setting up and managing Active Directory
 
----
+- Implementing RBAC and file server permissions
 
-## 📸 Screenshots
+- Hardening systems with Group Policy
 
-| Feature                  | Screenshot |
-| ------------------------ | ---------- |
-| AD setup                 |            |
-| Group Policy example     |            |
-| File permission denied   |            |
-| Sysmon Event Viewer logs |            |
-| DNS Sinkhole in action   |            |
-| Red team PS simulation   |            |
+- Detecting and simulating security incidents
 
----
+- Monitoring logs with Sysmon and Event Viewer
 
-## 🙌 Credits
+- Practicing defense against common red team tactics
 
-Created by [Enioluwa Israel Akinwande](mailto\:enioluwakinwande@gmail.com) as part of a cybersecurity portfolio lab. Built with VirtualBox, Windows Server 2022, and Windows 11 Enterprise.
 
----
+## 🙋‍♂️ About Me
 
-## 💼 License
+**Enioluwa Israel Akinwande**\
+Aspiring Cybersecurity Analyst\
+📧 [enioluwakinwande@gmail.com](mailto\:enioluwakinwande@gmail.com)\
+📍 Based in Canada
 
-MIT License
