@@ -31,14 +31,11 @@ On **Client01**, I:
   - Preferred DNS: `192.168.xx.xx` (my DC)
 
 
-![alt text][networksetting] ![alt text][prop] ![alt text][adapter] 
 
 
-[networksetting]: https://github.com/enioluww/activedirectory-Cyberlab/blob/9ab055417563108d172553165b93d48edaf919ef/networksetting.png
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/9ab055417563108d172553165b93d48edaf919ef/networksetting.png?raw=true" alt="Adapter Settings" width="300"/><img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/PROPERTIES.png?raw=true" alt="Properties" width="300"/><img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/efafdc69c12ae130628028cc3fda5ff93888fef3/Adapter%20settings.png?raw=true" alt="Adapter Settings" width="300"/>
 
-[prop]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/PROPERTIES.png
 
-[adapter]: https://github.com/enioluww/activedirectory-Cyberlab/blob/efafdc69c12ae130628028cc3fda5ff93888fef3/Adapter%20settings.png
 
 
 ---
@@ -63,11 +60,13 @@ On **Client01**:
 - Restarted after the prompt
 
 
-![alt text][jd] ![alt text][jd2]
+<h3>Joining the Domain (Part 1)</h3>
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/JOIN%20DOMAIN.png?raw=true" alt="Join Domain Screenshot" width="300"/>
 
-[jd2]: https://github.com/enioluww/activedirectory-Cyberlab/blob/a8549ae42e37f6360adf45963b9ceb8bdfb99a11/Join%20domain%20(2).png
+<h3>Joining the Domain (Part 2)</h3>
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/a8549ae42e37f6360adf45963b9ceb8bdfb99a11/Join%20domain%20(2).png?raw=true" alt="Join Domain Step 2" width="300"/>
 
-[jd]:https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/JOIN%20DOMAIN.png
+
 
 
 ---
@@ -88,9 +87,10 @@ In **Active Directory Users and Computers** on DC01:
 - Then I created user accounts like `jsmith`, `ajones`, `bwayne`, and `intern1`
 - Assigned them to their respective groups
 
-![alt text][RBAC]
+<h3>Role-Based Access Control (RBAC) - Group Creation</h3>
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/4875fd86f8a1c5e28a491dc0d69b6b967cabeb0c/Group%20creation.png?raw=true" alt="Group Creation for RBAC" width="600"/>
 
-[RBAC]: https://github.com/enioluww/activedirectory-Cyberlab/blob/4875fd86f8a1c5e28a491dc0d69b6b967cabeb0c/Group%20creation.png
+
 
 ---
 
@@ -110,9 +110,8 @@ Then I applied NTFS permissions so that:
 - Only `Finance` group can access the Finance share
 - All domain users can access Public (read-only)
 
-![alt text][NTFS]
-
-[NTFS]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/NTFS%20file%20permissions.png
+<h3>NTFS File Permissions</h3>
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/NTFS%20file%20permissions.png?raw=true" alt="NTFS File Permissions Screenshot" width="600"/>
 
 ---
 
@@ -128,11 +127,11 @@ Using Group Policy Management, I applied:
 | Logon Warning Banner   | All Users | Legal warning at login     |
 | Block USB Storage      | All Users | Prevent data exfiltration  |
 
-![alt text][secure] ![alt text][warning]
+<h3>Security Hardening</h3>
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/security%20hardening.png?raw=true" width="300"/>
 
-[secure]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/security%20hardening.png
-
-[warning]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/warning%20screen.png
+<h3>Warning Screen</h3>
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/warning%20screen.png?raw=true" width="300"/>
 
 
 
@@ -145,11 +144,9 @@ I enabled login auditing and viewed results in Event Viewer:
 
 - `Event ID 4624`: Successful login
 - `Event ID 4625`: Failed login
-![alt text][event]
-
-[event]: https://github.com/enioluww/activedirectory-Cyberlab/blob/4875fd86f8a1c5e28a491dc0d69b6b967cabeb0c/Event%20viewer-login%20audit.png
-
-
+  
+<h3>Event Viewer - Login Audit</h3>
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/4875fd86f8a1c5e28a491dc0d69b6b967cabeb0c/Event%20viewer-login%20audit.png?raw=true" width="600"/>
 ---
 
 ### 9. Simulate a Brute Force Attack
@@ -162,9 +159,9 @@ for /L %i in (1,1,10) do net use \DC01\C$ /user:corp\jsmith wrongpassword
 
 After 3 attempts, the account locked. I verified it in Active Directory Users and Computers.
 
-![alt text][lockout]
+<h3>Account Lockout Enforcement</h3>
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/account%20lockout%20enforcement.png?raw=true" width="600"/>
 
-[lockout]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/account%20lockout%20enforcement.png
 
 ---
 
@@ -185,9 +182,8 @@ Sysmon64.exe -accepteula -i sysmonconfig.xml
 ```
 Event Viewer > Applications and Services Logs > Microsoft > Windows > Sysmon > Operational
 ```
-![alt text][log]
+<img src="https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/sysmon%20logs.png?raw=true" width="600" />
 
-[log]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/sysmon%20logs.png
 
 ---
 
