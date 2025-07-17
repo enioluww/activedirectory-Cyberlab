@@ -74,7 +74,7 @@ In **Active Directory Users and Computers** on DC01:
 - Assigned them to their respective groups
 
 📸&#x20;
-[alt text](GPO's.png)
+(https://github.com/enioluww/activedirectory-Cyberlab/blob/60dd36fe9a89e6a30f8c7336a987988a82c41e28/JOIN%20DOMAIN.png)
 
 ---
 
