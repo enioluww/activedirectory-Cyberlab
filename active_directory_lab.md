@@ -60,8 +60,7 @@ On **Client01**:
 
 ![alt text][jd] ![alt text][jd2]
 
-[jd2]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/JOIN%20DOMAIN.png
-
+[jd2]: https://github.com/enioluww/activedirectory-Cyberlab/blob/a8549ae42e37f6360adf45963b9ceb8bdfb99a11/Join%20domain%20(2).png
 
 [jd]:https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/JOIN%20DOMAIN.png
 
@@ -85,9 +84,9 @@ In **Active Directory Users and Computers** on DC01:
 - Then I created user accounts like `jsmith`, `ajones`, `bwayne`, and `intern1`
 - Assigned them to their respective groups
 
-![alt text][logo]
+![alt text][RBAC]
 
-[logo]: https://github.com/enioluww/activedirectory-Cyberlab/blob/60dd36fe9a89e6a30f8c7336a987988a82c41e28/JOIN%20DOMAIN.png
+[RBAC]: https://github.com/enioluww/activedirectory-Cyberlab/blob/60dd36fe9a89e6a30f8c7336a987988a82c41e28/JOIN%20DOMAIN.png
 
 ---
 
