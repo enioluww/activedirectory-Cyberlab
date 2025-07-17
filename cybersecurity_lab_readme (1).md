@@ -242,6 +242,9 @@ ping dc01
 
 **📷 Screenshot Placeholder: NTFS Permissions**
 
+![NTFS Permissions Example](NTFS file permissions.png)
+
+
 ### Audit & Monitor Logins
 
 - Enable audit logon events via GPO
