@@ -57,7 +57,14 @@ On **Client01**:
 - Entered domain admin credentials
 - Restarted after the prompt
 
-📸  📸;
+
+![alt text][jd] ![alt text][jd2]
+
+[jd2]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/JOIN%20DOMAIN.png
+
+
+[jd]:https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/JOIN%20DOMAIN.png
+
 
 ---
 
