@@ -24,10 +24,10 @@ On **Client01**, I:
 - Opened `Control Panel > Network and Sharing Center > Adapter Settings`
 - Right-clicked the network adapter > Properties > IPv4
 - Set:
-  - IP Address: `192.168.56.11`
+  - IP Address: `192.168.xx.xx`
   - Subnet Mask: `255.255.255.0`
-  - Default Gateway: `192.168.56.1`
-  - Preferred DNS: `192.168.56.10` (my DC)
+  - Default Gateway: `192.168.xx.xx`
+  - Preferred DNS: `192.168.xx.xx` (my DC)
 
 📸&#x20;
 
@@ -38,7 +38,7 @@ On **Client01**, I:
 I opened Command Prompt and ran:
 
 ```bash
-ping 192.168.56.10
+ping 192.168.xx.xx
 ```
 
 ---
@@ -52,7 +52,7 @@ On **Client01**:
 - Entered domain admin credentials
 - Restarted after the prompt
 
-📸  📸&#x20;
+📸  📸;
 
 ---
 
@@ -70,11 +70,11 @@ In **Active Directory Users and Computers** on DC01:
   - IT Admins
   - HR
   - Finance
-  - Interns
 - Then I created user accounts like `jsmith`, `ajones`, `bwayne`, and `intern1`
 - Assigned them to their respective groups
 
 📸&#x20;
+[alt text](GPO's.png)
 
 ---
 
