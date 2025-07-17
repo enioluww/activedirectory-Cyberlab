@@ -30,11 +30,15 @@ On **Client01**, I:
   - Preferred DNS: `192.168.xx.xx` (my DC)
 
 
-![alt text][networksetting] ![alt text][adapter] 
+![alt text][networksetting] ![alt text][prop] ![alt text][adapter] 
 
 
 [networksetting]: https://github.com/enioluww/activedirectory-Cyberlab/blob/9ab055417563108d172553165b93d48edaf919ef/networksetting.png
+
+[prop]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/PROPERTIES.png
+
 [adapter]: https://github.com/enioluww/activedirectory-Cyberlab/blob/efafdc69c12ae130628028cc3fda5ff93888fef3/Adapter%20settings.png
+
 
 ---
 
@@ -79,14 +83,13 @@ In **Active Directory Users and Computers** on DC01:
 
 - I created these security groups:
   - IT Admins
-  - HR
-  - Finance
+  - HR users
 - Then I created user accounts like `jsmith`, `ajones`, `bwayne`, and `intern1`
 - Assigned them to their respective groups
 
 ![alt text][RBAC]
 
-[RBAC]: https://github.com/enioluww/activedirectory-Cyberlab/blob/60dd36fe9a89e6a30f8c7336a987988a82c41e28/JOIN%20DOMAIN.png
+[RBAC]: https://github.com/enioluww/activedirectory-Cyberlab/blob/4875fd86f8a1c5e28a491dc0d69b6b967cabeb0c/Group%20creation.png
 
 ---
 
@@ -106,7 +109,9 @@ Then I applied NTFS permissions so that:
 - Only `Finance` group can access the Finance share
 - All domain users can access Public (read-only)
 
-📸  📸&#x20;
+![alt text][NTFS]
+
+[NTFS]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/NTFS%20file%20permissions.png
 
 ---
 
@@ -122,7 +127,14 @@ Using Group Policy Management, I applied:
 | Logon Warning Banner   | All Users | Legal warning at login     |
 | Block USB Storage      | All Users | Prevent data exfiltration  |
 
-📸  📸  📸&#x20;
+![alt text][secure] ![alt text][warning]
+
+[secure]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/security%20hardening.png
+
+[warning]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/warning%20screen.png
+
+
+
 
 ---
 
@@ -132,8 +144,10 @@ I enabled login auditing and viewed results in Event Viewer:
 
 - `Event ID 4624`: Successful login
 - `Event ID 4625`: Failed login
+![alt text][event]
 
-📸&#x20;
+[event]: https://github.com/enioluww/activedirectory-Cyberlab/blob/4875fd86f8a1c5e28a491dc0d69b6b967cabeb0c/Event%20viewer-login%20audit.png
+
 
 ---
 
@@ -146,6 +160,10 @@ for /L %i in (1,1,10) do net use \DC01\C$ /user:corp\jsmith wrongpassword
 ```
 
 After 3 attempts, the account locked. I verified it in Active Directory Users and Computers.
+
+![alt text][lockout]
+
+[lockout]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/account%20lockout%20enforcement.png
 
 ---
 
@@ -166,6 +184,9 @@ Sysmon64.exe -accepteula -i sysmonconfig.xml
 ```
 Event Viewer > Applications and Services Logs > Microsoft > Windows > Sysmon > Operational
 ```
+![alt text][log]
+
+[log]: https://github.com/enioluww/activedirectory-Cyberlab/blob/62aab6ef6b3d6d9b8d16b84fa1d920512f0b3b02/sysmon%20logs.png
 
 ---
 
@@ -184,40 +205,23 @@ To block known malicious domains:
 
 ---
 
-### 12. Red Team Simulation
 
-To simulate basic attacker actions:
+### What This Lab Taught Me
 
-```powershell
-# List domain users
-net user /domain
+Building this lab gave me real-world skills in:
 
-# List domain admins
-net group "Domain Admins" /domain
+- Setting up and managing Active Directory
 
-# Add scheduled task for persistence
-schtasks /create /tn "Backdoor" /tr "calc.exe" /sc onlogon /ru SYSTEM /f
-```
+- Implementing RBAC and file server permissions
 
----
+- Hardening systems with Group Policy
 
-## 🖼️ Screenshots
+- Detecting and simulating security incidents
 
-| Feature                     | Screenshot |
-| --------------------------- | ---------- |
-| Adapter Settings            |            |
-| Domain Join                 |            |
-| Group Creation              |            |
-| NTFS Permissions            |            |
-| Group Policy Editor         |            |
-| Account Lockout Policy      |            |
-| Event Viewer (Login Audits) |            |
+- Monitoring logs with Sysmon and Event Viewer
 
----
+- Practicing defense against common red team tactics
 
-## 📄 License
-
-MIT License — use this for learning or your own projects!
 
 ## 🙋‍♂️ About Me
 
