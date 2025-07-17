@@ -29,7 +29,10 @@ On **Client01**, I:
   - Default Gateway: `192.168.xx.xx`
   - Preferred DNS: `192.168.xx.xx` (my DC)
 
-📸&#x20;
+
+![alt text][logo]
+
+[logo]: https://github.com/enioluww/activedirectory-Cyberlab/blob/60dd36fe9a89e6a30f8c7336a987988a82c41e28/JOIN%20DOMAIN.png
 
 ---
 
@@ -73,8 +76,9 @@ In **Active Directory Users and Computers** on DC01:
 - Then I created user accounts like `jsmith`, `ajones`, `bwayne`, and `intern1`
 - Assigned them to their respective groups
 
-📸&#x20;
-(https://github.com/enioluww/activedirectory-Cyberlab/blob/60dd36fe9a89e6a30f8c7336a987988a82c41e28/JOIN%20DOMAIN.png)
+![alt text][logo]
+
+[logo]: https://github.com/enioluww/activedirectory-Cyberlab/blob/60dd36fe9a89e6a30f8c7336a987988a82c41e28/JOIN%20DOMAIN.png
 
 ---
 
